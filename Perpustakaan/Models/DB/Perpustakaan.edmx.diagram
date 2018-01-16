@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1c2e25d6e9e24b2181b89586449f63cb" Name="Diagram1">
+        <EntityTypeShape EntityType="PerpustakaanModel.LookUpRole" Width="1.5" PointX="0.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PerpustakaanModel.SYSUser" Width="1.5" PointX="0.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PerpustakaanModel.SYSUserProfile" Width="1.5" PointX="4.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PerpustakaanModel.SYSUserRole" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="PerpustakaanModel.FK__SYSUserRo__LOOKU__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="PerpustakaanModel.FK__SYSUserPr__SYSUs__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="PerpustakaanModel.FK__SYSUserRo__SYSUs__35BCFE0A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PerpustakaanModel.buku" Width="1.5" PointX="6.25" PointY="0.75" />
+        <EntityTypeShape EntityType="PerpustakaanModel.laporan" Width="1.5" PointX="9.5" PointY="0.5" />
+        <EntityTypeShape EntityType="PerpustakaanModel.pelanggan" Width="1.5" PointX="9.375" PointY="3.875" />
+        <AssociationConnector Association="PerpustakaanModel.FK__laporan__id_buku__5629CD9C" />
+        <AssociationConnector Association="PerpustakaanModel.FK__laporan__id_pela__5535A963" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

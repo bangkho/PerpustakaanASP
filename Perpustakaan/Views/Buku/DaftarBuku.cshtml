@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Daftar Buku";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="divUserListContainer">
+    @Html.Action("ManageBukuPartial", "Buku");
+</div> 
+@Html.ActionLink("Tambah Buku Baru", "AddBuku", "Buku")

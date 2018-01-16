@@ -1,0 +1,146 @@
+﻿@model Perpustakaan.Models.ViewModel.BukuDataView
+
+<div>
+    <h1>Daftar Buku Perpustakaan </h1>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>ID Buku</th>
+                <th>ISBN</th>
+                <th>Judul</th>
+                <th>Penulis</th>
+                <th>Penerbit</th>
+                <th>Tahun</th>
+                <th>Stok</th>
+                <th>Opsi</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.BukuProfile)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(m => i.id_buku)</td>
+                    <td> @Html.DisplayFor(m => i.isbn)</td>
+                    <td> @Html.DisplayFor(m => i.judul)</td>
+                    <td> @Html.DisplayFor(m => i.penulis)</td>
+                    <td> @Html.DisplayFor(m => i.penerbit)</td>
+                    <td> @Html.DisplayFor(m => i.tahun)</td>
+                    <td> @Html.DisplayFor(m => i.stok)</td>
+                    <td><a href="javascript:void(0)" class="lnkEdit">Edit</a></td>
+                    <td><a href="javascript:void(0)" class="lnkDelete">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="divEdit" style="display:none">
+    <input type="hidden" id="hidID" />
+    <table>
+        <tr>
+            <td>ISBN</td>
+            <td><input type="text" id="txtISBN" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Judul</td>
+            <td><input type="text" id="txtJudul" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Penulis</td>
+            <td><input type="text" id="txtPenulis" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Penerbit</td>
+            <td><input type="text" id="txtPenerbit" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Tahun</td>
+            <td><input type="text" id="txtTahun" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>Stok</td>
+            <td><input type="text" id="txtStok" class="form-control" /></td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+ $(function () {
+ var initDialog = function (type) {
+ var title = type;
+ $("#divEdit").dialog({
+ autoOpen: false,
+ modal: true,
+ title: type + ' Buku',
+ width: 360,
+ buttons: {
+ Save: function () {
+ var id = $("#hidID").val();
+ var isbn = $("#txtISBN").val();
+ var judul = $("#txtJudul").val();
+ var penulis = $("#txtPenulis").val();
+ var penerbit = $("#txtPenerbit").val();
+ var tahun = $("#txtTahun").val();
+ var stok = $("#txtStok").val();
+ UpdateKamar(id,isbn,judul,penulis,penerbit,tahun,stok);
+$(this).dialog("destroy");
+ },
+Cancel: function () { $(this).dialog("destroy"); }
+ }
+ });
+ }
+ function UpdateKamar(id, no, jud, lis, bit, thn,tok) {
+ $.ajax({
+ type: "POST",
+ url: "@(Url.Action("UpdateBukuData", "Buku"))",
+ data: { bukuID: id, isbn: no, judul: jud, penulis: lis,
+penerbit: bit, tahun: thn,stok: tok},
+ success: function (data) {
+
+$("#divUserListContainer").load("@(Url.Action("ManageBukuPartial","Buku", new { status
+="update" }))");
+ },
+ error: function (error) {
+ //to do:
+ }
+ });
+ }
+ $("a.lnkEdit").on("click", function () {
+ initDialog("Edit");
+ $(".alert-success").empty();
+ var row = $(this).closest('tr');
+ $("#hidID").val(row.find("td:eq(0)").html().trim());
+ $("#txtISBN").val(row.find("td:eq(1)").html().trim())
+ $("#txtJudul").val(row.find("td:eq(2)").html().trim())
+ $("#txtPenulis").val(row.find("td:eq(3)").html().trim())
+ $("#txtPenerbit").val(row.find("td:eq(4)").html().trim())
+ $("#txtTahun").val(row.find("td:eq(5)").html().trim())
+ $("#txtStok").val(row.find("td:eq(6)").html().trim())
+ $("#divEdit").dialog("open");
+ return false;
+ });
+ function DeleteBuku(id) {
+ $.ajax({
+ type: "POST",
+ url: "@(Url.Action("DeleteBuku","Buku"))",
+ data: { bukuID: id },
+ success: function (data) {
+
+$("#divUserListContainer").load("@(Url.Action("ManageBukuPartial","Buku", new { status
+="delete" }))");
+ },
+ error: function (error) { }
+ });
+ }
+$("a.lnkDelete").on("click", function () {
+ var row = $(this).closest('tr');
+ var id = row.find("td:eq(0)").html().trim();
+ var answer = confirm("Apakah anda yakin akan menghapus kamar dengan ID " + id + "?");
+ if (answer)
+    DeleteBuku(id);
+ return false;
+});
+ });
+</script>
+<span class="alert-success">@ViewBag.Message</span>
